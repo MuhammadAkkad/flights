@@ -4,6 +4,7 @@
     package="com.muhammad.flights">
 
     <application
+        android:name=".app.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +15,7 @@
         android:theme="@style/Theme.Flights"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".app.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

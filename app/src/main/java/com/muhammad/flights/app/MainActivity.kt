@@ -14,12 +14,12 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: FlightsViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.hitv.text = viewModel.hi
+        binding.hitv.text = viewModel.getFlights().toString()
     }
+
 }

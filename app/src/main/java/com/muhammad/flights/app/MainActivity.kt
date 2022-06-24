@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.muhammad.flights.app.adapters.FlightsAdapter
 import com.muhammad.flights.app.viewmodels.FlightsViewModel
+import com.muhammad.flights.data.model.FlightsModel
 import com.muhammad.flights.data.usecase.Status
 import com.muhammad.flights.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,10 +33,9 @@ class MainActivity : AppCompatActivity() {
                 when (onNext.status) {
                     Status.ERROR -> {
                         hideLoading()
-                        binding.hitv.text = onNext.message
                     }
                     Status.SUCCESS -> {
-                        binding.hitv.text = onNext.data?.data.toString()
+                        onNext.data?.let { setupAdapter(it) }
                         hideLoading()
                     }
                     else -> {
@@ -43,6 +45,12 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+    }
+
+    private fun setupAdapter(data: FlightsModel) {
+        val adapter = FlightsAdapter(data, applicationContext)
+        binding.flightsRv.layoutManager = LinearLayoutManager(applicationContext)
+        binding.flightsRv.adapter = adapter
     }
 
     private fun showLoading() {

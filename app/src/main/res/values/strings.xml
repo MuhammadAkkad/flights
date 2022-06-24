@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">flights</string>
+    <string name="direct_flight">Direkt Uçuş</string>
+    <string name="transit_flight">Aktarmalı</string>
+    <string name="person">kişi</string>
+    <string name="handbag">El bagajı</string>
+
+
 </resources>

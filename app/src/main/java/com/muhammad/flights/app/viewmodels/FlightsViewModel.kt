@@ -13,7 +13,7 @@ import javax.inject.Inject
 class FlightsViewModel @Inject constructor(private val useCase: FlightsUseCase) : ViewModel() {
 
     fun getFlights(): Observable<State<FlightsModel>> { // delay is intentional to mimic API call
-        return Observable.just(useCase.getFlightsUseCase()).delay(2000, TimeUnit.MILLISECONDS)
+        return Observable.just(useCase.getFlightsUseCase()).delay(2, TimeUnit.MILLISECONDS)
     }
 
 }

@@ -1,6 +1,6 @@
 package com.muhammad.flights.app
 
-class Constats {
+class Constants {
     companion object {
         const val FILE_DIRECTORY = "file.json"
     }

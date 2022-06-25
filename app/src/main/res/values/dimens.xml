@@ -24,6 +24,7 @@
     <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_34">34dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
     <dimen name="margin_140">140dp</dimen>
 
     <!--FONT SIZES  -->

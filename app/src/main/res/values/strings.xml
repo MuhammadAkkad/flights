@@ -4,6 +4,8 @@
     <string name="transit_flight">Aktarmalı</string>
     <string name="person">kişi</string>
     <string name="handbag">El bagajı</string>
+    <string name="order">Sıra</string>
+    <string name="filter">Filtrele</string>
 
 
 </resources>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,7 +16,6 @@ import com.muhammad.flights.data.model.FlightsModel
 import com.muhammad.flights.data.usecase.Status
 import com.muhammad.flights.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import org.apache.commons.text.StringEscapeUtils
 import kotlin.math.ceil
 
@@ -35,22 +35,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // disable night mode.
 
-        viewModel.getFlights().observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { configureViews(false) }
-            .subscribe { onNext ->
-                when (onNext.status) {
-                    Status.ERROR -> {
-                        configureViews(false)
-                    }
-                    Status.SUCCESS -> {
-                        onNext.data?.let {
-                            setupAdapter(it)
-                            setDataToViews(it)
-                            configureViews(true)
-                        }
+        setupObservers()
+        fetchFlights()
+    }
+
+    private fun fetchFlights() {
+        viewModel.getFlights()
+    }
+
+    private fun setupObservers() {
+        viewModel.flightsLiveData.observe(this) {
+            when (it.status) {
+                Status.LOADING -> {
+                    configureViews(false)
+                }
+                Status.ERROR -> {
+                    // region this is just an example of error handling.. there must be some other UI changes to be done
+                    configureViews(true)
+                    Toast.makeText(this, "an error occurred", Toast.LENGTH_LONG).show()
+                    // endregion
+                }
+                Status.SUCCESS -> {
+                    it.data?.let { data ->
+                        setupAdapter(data)
+                        setDataToViews(data)
+                        configureViews(true)
                     }
                 }
             }
+        }
     }
 
     private fun setDataToViews(model: FlightsModel) {

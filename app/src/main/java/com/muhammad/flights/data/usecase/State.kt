@@ -12,10 +12,15 @@ data class State<out T>(val status: Status, val data: T?, val message: String?) 
             return State(Status.ERROR, null, msg)
         }
 
+        fun <T> loading(): State<T> {
+            return State(Status.LOADING, null, null)
+        }
+
     }
 }
 
 enum class Status {
     SUCCESS,
-    ERROR
+    ERROR,
+    LOADING
 }

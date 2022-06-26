@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // disable night mode.
+
         viewModel.getFlights().observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { configureViews(false) }
             .subscribe { onNext ->
@@ -45,15 +46,11 @@ class MainActivity : AppCompatActivity() {
                         onNext.data?.let {
                             setupAdapter(it)
                             setDataToViews(it)
+                            configureViews(true)
                         }
-                        configureViews(true)
-                    }
-                    else -> {
-                        configureViews(false)
                     }
                 }
             }
-
     }
 
     private fun setDataToViews(model: FlightsModel) {
@@ -116,5 +113,4 @@ class MainActivity : AppCompatActivity() {
             binding.flightsRv.visibility = if (!isLoaded) View.GONE else View.VISIBLE
         }
     }
-
 }

@@ -18,6 +18,7 @@ class FlightsAdapter(private val dataSet: FlightsModel, private val context: Con
     RecyclerView.Adapter<FlightsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val airlineIcon: ImageView
         val airlineName: TextView
         val flightPrice: TextView
@@ -26,9 +27,8 @@ class FlightsAdapter(private val dataSet: FlightsModel, private val context: Con
         val destination: TextView
         val departureTime: TextView
         val arrivalTime: TextView
-        val bagagge: TextView
-        val bagaggeAllawance: ImageView
-
+        val baggage: TextView
+        val baggageAllowance: ImageView
 
         init {
             airlineIcon = view.findViewById(R.id.airline_icon_iv)
@@ -39,22 +39,21 @@ class FlightsAdapter(private val dataSet: FlightsModel, private val context: Con
             destination = view.findViewById(R.id.destination_tv)
             departureTime = view.findViewById(R.id.departure_time_tv)
             arrivalTime = view.findViewById(R.id.arrival_time_tv)
-            bagagge = view.findViewById(R.id.baggage_tv)
-            bagaggeAllawance = view.findViewById(R.id.baggage_allowance_iv)
+            baggage = view.findViewById(R.id.baggage_tv)
+            baggageAllowance = view.findViewById(R.id.baggage_allowance_iv)
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_flight, viewGroup, false)
-
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val airlineInfo = getAirline(position)
 
         // airline info
+        val airlineInfo = getAirline(position)
         holder.airlineName.text = StringEscapeUtils.unescapeJava(airlineInfo.name)
         Glide.with(holder.airlineIcon.context)
             .load(StringEscapeUtils.unescapeJava(airlineInfo.image)).into(holder.airlineIcon)
@@ -66,31 +65,33 @@ class FlightsAdapter(private val dataSet: FlightsModel, private val context: Con
         holder.flightPrice.text = price
 
         // baggage
-        holder.bagaggeAllawance.setBackgroundResource(
-            if(isBaggageAllowance(position)) R.drawable.suitcases else R.drawable.bag)
-        holder.bagagge.text = getBagaggeOptions(position)
+        holder.baggageAllowance.setBackgroundResource(
+            if (isBaggageAllowance(position)) R.drawable.suitcases else R.drawable.bag
+        )
+        holder.baggage.text = getBaggageOptions(position)
 
         // flight type
-        holder.flightType.text = if(dataSet.data.search_parameters.is_direct) context.getString(R.string.direct_flight)
-        else context.getString(R.string.transit_flight)
+        holder.flightType.text =
+            if (dataSet.data.search_parameters.is_direct) context.getString(R.string.direct_flight)
+            else context.getString(R.string.transit_flight)
 
         // departure and destination
         holder.departure.text = dataSet.data.flights.departure[position].segments[0].origin
         holder.destination.text = dataSet.data.flights.departure[position].segments[0].destination
 
         // departure and arrival time
-        holder.departureTime.text = dataSet.data.flights.departure[position].segments[0].departure_datetime.time
-        holder.arrivalTime.text = dataSet.data.flights.departure[position].segments[0].arrival_datetime.time
-
+        holder.departureTime.text =
+            dataSet.data.flights.departure[position].segments[0].departure_datetime.time
+        holder.arrivalTime.text =
+            dataSet.data.flights.departure[position].segments[0].arrival_datetime.time
     }
 
     private fun getAirline(position: Int): Airline {
         val airlineCode = dataSet.data.flights.departure[position].segments[0].marketing_airline
         return dataSet.data.airlines.first { it.code == airlineCode }
-
     }
 
-    private fun getBagaggeOptions(position: Int): String {
+    private fun getBaggageOptions(position: Int): String {
         return if (isBaggageAllowance(position)) {
             val personString = context.getString(R.string.person)
             val allowance =

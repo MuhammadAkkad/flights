@@ -22,6 +22,16 @@ android {
         correctErrorTypes true
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
+
     buildFeatures {
         viewBinding = true
     }
@@ -40,6 +50,7 @@ android {
         jvmTarget = '1.8'
     }
 }
+
 
 dependencies {
     // UI
@@ -90,4 +101,29 @@ dependencies {
 
     //Apache for decoding unicodes
     implementation 'org.apache.commons:commons-text:1.7'
+
+
+    // For Robolectric tests.
+    testImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+    // ...with Kotlin.
+    kaptTest("com.google.dagger:hilt-android-compiler:2.38.1")
+    // ...with Java.
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.38.1")
+
+
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
+    // ...with Java.
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.38.1")
+
+    testImplementation 'junit:junit:4.13.2'
+
+    // required if you want to use Mockito for unit tests
+    testImplementation 'org.mockito:mockito-core:2.24.5'
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    testImplementation 'org.junit.platform:junit-platform-commons:1.6.2'
+    testImplementation "org.robolectric:robolectric:4.5.1"
 }

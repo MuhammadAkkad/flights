@@ -13,11 +13,8 @@ import com.muhammad.flights.app.Utils
 import com.muhammad.flights.data.model.Airline
 import com.muhammad.flights.data.model.FlightsModel
 import org.apache.commons.text.StringEscapeUtils
-import java.text.NumberFormat
-import java.util.*
 
-
-class FlightsAdapter(private val dataSet: FlightsModel,val context: Context) :
+class FlightsAdapter(private val dataSet: FlightsModel, private val context: Context) :
     RecyclerView.Adapter<FlightsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

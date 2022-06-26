@@ -12,6 +12,7 @@ import com.muhammad.flights.data.usecase.Status
 import com.muhammad.flights.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlin.math.ceil
 
 
 @AndroidEntryPoint
@@ -26,25 +27,48 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         viewModel.getFlights().observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showLoading() }
+            .doOnSubscribe { configureViews(false) }
             .subscribe { onNext ->
                 when (onNext.status) {
                     Status.ERROR -> {
-                        hideLoading()
+                        configureViews(false)
                     }
                     Status.SUCCESS -> {
-                        onNext.data?.let { setupAdapter(it) }
-                        hideLoading()
+                        onNext.data?.let {
+                            setupAdapter(it)
+                            setDataToViews(it)
+                        }
+                        configureViews(true)
                     }
                     else -> {
-                        hideLoading()
+                        configureViews(false)
                     }
                 }
             }
 
+    }
 
+    private fun setDataToViews(model: FlightsModel) {
+        val price =
+            Utils.formatCurrency(ceil(model.data.flights.departure[0].price_breakdown.total))
+        val currency = model.data.flights.departure[0].price_breakdown.displayed_currency
+        val valueToDisplay = "$price $currency"
+        binding.flightsOtherDatesLayout.todayPriceTv.text = valueToDisplay
+
+        val date = model.data.flights.departure[0].segments[0].departure_datetime.date
+        binding.flightsOtherDatesLayout.todayDateTv.text = viewModel.getCustomDateScoreboard(date)
+
+
+        val previousDayPrice =
+            Utils.formatCurrency(ceil(model.data.price_history.departure.previous_day_price.toDouble()))
+        val previousDayPriceWithCurrency = "$previousDayPrice $currency"
+        binding.flightsOtherDatesLayout.previousDayPriceTv.text = previousDayPriceWithCurrency
+
+        val nextDayPrice =
+            Utils.formatCurrency(ceil(model.data.price_history.departure.next_day_price.toDouble()))
+        val nextDayPriceWithCurrency = "$nextDayPrice $currency"
+        binding.flightsOtherDatesLayout.nextDayPriceTv.text = nextDayPriceWithCurrency
     }
 
     private fun setupAdapter(data: FlightsModel) {
@@ -53,12 +77,12 @@ class MainActivity : AppCompatActivity() {
         binding.flightsRv.adapter = adapter
     }
 
-    private fun showLoading() {
-        binding.pb.visibility = View.VISIBLE
-    }
 
-    private fun hideLoading() {
-        binding.pb.visibility = View.GONE
+    private fun configureViews(isLoaded: Boolean) {
+        binding.pb.visibility = if (isLoaded) View.GONE else View.VISIBLE
+        binding.flightsOtherDatesLayout.root.visibility = if (!isLoaded) View.GONE else View.VISIBLE
+        binding.buttonsLayout.visibility = if (!isLoaded) View.GONE else View.VISIBLE
+        binding.flightsRv.visibility = if (!isLoaded) View.GONE else View.VISIBLE
     }
 
 }

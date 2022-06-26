@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.muhammad.flights.R
+import com.muhammad.flights.app.Utils
 import com.muhammad.flights.data.model.Airline
 import com.muhammad.flights.data.model.FlightsModel
 import org.apache.commons.text.StringEscapeUtils
@@ -63,7 +64,7 @@ class FlightsAdapter(private val dataSet: FlightsModel,val context: Context) :
 
         // pricing
         val price =
-            dataSet.data.flights.departure[position].price_breakdown.total.toString() + " " +
+            Utils.formatCurrency(dataSet.data.flights.departure[position].price_breakdown.total) + " " +
                     dataSet.data.flights.departure[position].price_breakdown.displayed_currency
         holder.flightPrice.text = price
 

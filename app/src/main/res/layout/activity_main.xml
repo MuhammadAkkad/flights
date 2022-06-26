@@ -11,21 +11,32 @@
         android:id="@+id/pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_32"
-        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.30" />
+
+    <include
+        android:id="@+id/flights_other_dates_layout"
+        layout="@layout/flights_other_dates_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Order And Sort layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/buttons_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_12"
         android:orientation="horizontal"
         android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/flights_other_dates_layout">
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
@@ -39,7 +50,7 @@
             android:paddingStart="@dimen/margin_28"
             android:paddingEnd="@dimen/margin_28"
             android:text="@string/order"
-            app:cornerRadius="@dimen/margin_12"
+            app:cornerRadius="@dimen/margin_6"
             app:iconPadding="@dimen/margin_0" />
 
         <com.google.android.material.button.MaterialButton
@@ -53,7 +64,7 @@
             android:paddingStart="@dimen/margin_28"
             android:paddingEnd="@dimen/margin_28"
             android:text="@string/filter"
-            app:cornerRadius="@dimen/margin_12"
+            app:cornerRadius="@dimen/margin_6"
             app:iconPadding="@dimen/margin_0" />
 
         <ImageButton
@@ -73,6 +84,8 @@
         android:id="@+id/flights_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

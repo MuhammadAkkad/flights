@@ -6,6 +6,8 @@
     <string name="handbag">El bagajı</string>
     <string name="order">Sıra</string>
     <string name="filter">Filtrele</string>
+    <string name="previous_day">Önceki gün</string>
+    <string name="nextDay">Sonraki gün</string>
 
 
 </resources>

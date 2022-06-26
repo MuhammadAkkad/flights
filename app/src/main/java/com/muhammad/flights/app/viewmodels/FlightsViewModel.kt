@@ -20,7 +20,7 @@ import javax.inject.Inject
 class FlightsViewModel @Inject constructor(private val useCase: FlightsUseCase) : ViewModel() {
 
     fun getFlights(): Observable<State<FlightsModel>> { // delay is intentional to mimic API call
-        return Observable.just(useCase.getFlightsUseCase()).delay(1500, TimeUnit.MILLISECONDS)
+        return Observable.just(useCase.getFlightsUseCase()).delay(1000, TimeUnit.MILLISECONDS)
     }
 
     fun getCustomDateScoreboard(dateTimeStr: String): String {
@@ -37,7 +37,7 @@ class FlightsViewModel @Inject constructor(private val useCase: FlightsUseCase) 
             formattedTime =
                 SimpleDateFormat(DISPLAY_FORMAT_PATTERN, Locale(LANG_CODE_TR)).format(date)
         } catch (e: ParseException) {
-            return "error parsing date"
+            return dateTimeStr
         }
         return "$formattedTime $dayName"
     }

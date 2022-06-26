@@ -130,9 +130,9 @@
                 android:contentDescription="@null"
                 android:gravity="end"
                 android:src="@drawable/ic_round_arrow_forward_ios_24"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/green"
                 android:textSize="@dimen/text_size_24"
-                app:tint="@android:color/holo_green_light" />
+                app:tint="@color/green" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -164,7 +164,7 @@
                 android:id="@+id/flight_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/green"
                 android:textSize="@dimen/text_size_16"
                 tools:text="Direct ucus" />
 

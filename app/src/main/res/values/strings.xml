@@ -8,6 +8,7 @@
     <string name="filter">Filtrele</string>
     <string name="previous_day">Önceki gün</string>
     <string name="nextDay">Sonraki gün</string>
-
+    <string name="one_way">Tek yön</string>
+    <string name="round_trip">Didiş dönüş</string>
 
 </resources>

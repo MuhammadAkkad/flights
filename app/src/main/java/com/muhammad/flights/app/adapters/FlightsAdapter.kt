@@ -104,7 +104,7 @@ class FlightsAdapter(private val dataSet: FlightsModel,val context: Context) :
                 dataSet.data.flights.departure[position].infos.baggage_info.firstBaggageCollection?.get(
                     0
                 )?.unit
-            "$allowance  $unit/$personString"
+            "$allowance $unit/$personString"
         } else {
             context.getString(R.string.handbag)
         }
